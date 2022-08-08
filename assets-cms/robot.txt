@@ -1,0 +1,17 @@
+*** Settings ***
+Library           RequestsLibrary
+Library           SeleniumLibrary
+
+*** Variables ***
+${demo_url}       http://192.168.200.115:31160/assets-api/login?
+
+*** Test Cases ***
+api
+    [Tags]  critical
+    Create Session    api    ${demo_url}
+    ${alarm_system_info}    RequestsLibrary.Get Request    api    /
+    log    ${alarm_system_info.status_code}
+    log    ${alarm_system_info.content}
+    should be true    ${alarm_system_info.status_code} == 401
+
+
